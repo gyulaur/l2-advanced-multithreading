@@ -15,6 +15,7 @@ public class EmployeeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeService.class);
 
     public CompletableFuture<List<Employee>> hiredEmployees() {
+        LOGGER.info("Load hired Employees");
         return CompletableFuture.supplyAsync(this::getEmployees);
     }
 
@@ -27,7 +28,7 @@ public class EmployeeService {
             } catch (InterruptedException e) {
                 LOGGER.error("GetSalary is failed, EmployeeId:  {}", employeeId);
             }
-            return RANDOM.nextInt(1000);
+            return RANDOM.nextInt(100);
         });
     }
 
