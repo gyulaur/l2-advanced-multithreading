@@ -14,25 +14,23 @@ public class EmployeeService {
     public static final Random RANDOM = new Random();
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeService.class);
 
-    public CompletableFuture<List<Employee>> hiredEmployees() {
+    public List<Employee> hiredEmployees() {
         LOGGER.info("Load hired Employees");
-        return CompletableFuture.supplyAsync(this::getEmployees);
+        return generateEmployees();
     }
 
-    public CompletableFuture<Integer> getSalary(int employeeId) {
-        return CompletableFuture.supplyAsync(() -> {
-            LOGGER.info("GetSalary Started, EmployeeId: {}", employeeId);
-            try {
-                Thread.sleep(1000);
-                LOGGER.info("GetSalary Finished, EmployeeId:  {}", employeeId);
-            } catch (InterruptedException e) {
-                LOGGER.error("GetSalary is failed, EmployeeId:  {}", employeeId);
-            }
-            return RANDOM.nextInt(100);
-        });
+    public int getSalary(int employeeId) {
+        LOGGER.info("GetSalary Started, EmployeeId: {}", employeeId);
+        try {
+            Thread.sleep(1000);
+            LOGGER.info("GetSalary Finished, EmployeeId:  {}", employeeId);
+        } catch (InterruptedException e) {
+            LOGGER.error("GetSalary is failed, EmployeeId:  {}", employeeId);
+        }
+        return RANDOM.nextInt(100);
     }
 
-    private List<Employee> getEmployees() {
+    private List<Employee> generateEmployees() {
         return IntStream.range(0, 1_000)
                 .mapToObj(index -> new Employee(index, 0))
                 .collect(Collectors.toList());
